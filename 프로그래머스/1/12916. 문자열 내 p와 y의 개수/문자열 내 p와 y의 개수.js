@@ -10,3 +10,5 @@ function solution(s){
     if(p_num===y_num) return true;
     else return false;
 }
+
+
