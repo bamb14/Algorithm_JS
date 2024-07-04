@@ -7,7 +7,6 @@ function solution(s){
         if(answer[i]==='p') p_num++;
         else if(answer[i]==='y') y_num++;
     }
-    if(p_num===0&&y_num===0) return true;
-    else if(p_num===y_num) return true;
+    if(p_num===y_num) return true;
     else return false;
 }
