@@ -1,7 +1,7 @@
 function solution(s) {
     let left_cnt = 0;
 
-    for (let i = 0; i < s.length; i++) {
+    for (i in s) {
         if (s[i] === '(') {
             left_cnt++;
         } else if (s[i] === ')') {
