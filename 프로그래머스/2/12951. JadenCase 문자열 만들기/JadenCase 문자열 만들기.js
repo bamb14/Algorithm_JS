@@ -6,6 +6,7 @@ function solution(s) {
             const lower=s[i].slice(1,).toLowerCase();
             s[i]=upper+lower;
          }
+        console.log(s);
     }
     return s.join(' ');
 }
