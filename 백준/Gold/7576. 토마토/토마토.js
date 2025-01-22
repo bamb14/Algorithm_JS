@@ -4,6 +4,7 @@ const [m, n] = a.shift().split(" ").map(Number);
 
 const directions = [[1, 0], [0, 1], [0, -1], [-1, 0]];
 let map = Array.from(Array(n), () => new Array(m));
+let visited=Array.from(Array(n),()=>new Array(m).fill(1))
 let queue = [];
 let unripe = 0;
 
@@ -14,6 +15,7 @@ for (let i = 0; i < n; i++) {
         map[i][j] = row[j];
         if (row[j] === 1) {
             queue.push([i, j]); // 익은 토마토의 좌표
+            visited[i][j]=0
         }
         if (row[j] === 0) {
             unripe++; // 익지 않은 토마토 개수
@@ -39,12 +41,14 @@ while (front < queue.length) {
             if (x < 0 || x >= n || y < 0 || y >= m || map[x][y] !== 0) {
                 continue;
             }
-
-            // 토마토를 익게 만듦
-            map[x][y] = 1;
-            queue.push([x, y]);
-            unripe--; // 익지 않은 토마토 감소
-            progressed = true;
+            if(visited[x][y]===1&&map[x][y]===0){
+                // 토마토를 익게 만듦
+                map[x][y] = 1;
+                visited[x][y]=0;
+                queue.push([x, y]);
+                unripe--; // 익지 않은 토마토 감소
+                progressed = true;
+            }
         }
     }
 
