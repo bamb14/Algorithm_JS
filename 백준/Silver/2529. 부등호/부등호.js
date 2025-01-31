@@ -6,10 +6,10 @@ const m=sign.length
 const numbers_asec=Array.from({length:10},(_, i) => i)
 const numbers_desc=[...numbers_asec].sort((a,b)=>b-a)
 let visited=Array.from({length: 10}).fill(0)
-var answer_asec=[]
-var answer_desc=[]
-var result_asec=[]
-var result_desc=[]
+const answer_asec=[]
+const answer_desc=[]
+const result_asec=[]
+const result_desc=[]
 
 function solution(depth,idx,answer,numbers,result){
     if(depth===m+1){
