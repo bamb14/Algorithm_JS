@@ -1,7 +1,11 @@
 function solution(sizes) {
-    const width = sizes.map(size => Math.max(size[0], size[1]));
-    const height = sizes.map(size => Math.min(size[0], size[1]));
-    const width_max = Math.max(...width);
-    const height_max = Math.max(...height);
-    return width_max * height_max;
+    let list=sizes.map(item=>item.sort((a,b)=>a-b))
+    
+    let width=sizes[0][0]
+    let height=sizes[0][1]
+    for(let i=0; i<sizes.length; i++){
+        width=Math.max(width, sizes[i][0])
+        height=Math.max(height, sizes[i][1])
+    }
+    return width*height
 }
