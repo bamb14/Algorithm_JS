@@ -19,14 +19,13 @@ const check=(mid)=>{
         }
         rest=rest-money
     }
-    return count
+    if(count<=m) return true
+    else return false
 }
 
 while(start<=end){
     const mid=~~((start+end)/2)
-    // console.log(mid)
-    if(check(mid)<=m){
-        // console.log(mid)
+    if(check(mid)){
         answer=mid;
         end=mid-1
     }else start=mid+1;
