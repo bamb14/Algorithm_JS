@@ -9,6 +9,7 @@ function solution(clothes) {
 
     for (const key of keysArray) {
         answer *= map.get(key) +1
+        console.log(answer)
     }
 
     return answer-1
