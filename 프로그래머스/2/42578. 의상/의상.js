@@ -5,11 +5,8 @@ function solution(clothes) {
         if(map.has(category)) map.set(category, map.get(category)+1)
         else map.set(category, 1)
     }
-    const keysArray = Array.from(map.keys());
-
-    for (const key of keysArray) {
-        answer *= map.get(key) +1
-        console.log(answer)
+    for(let value of map.values()){
+        answer *= (value+1)
     }
 
     return answer-1
