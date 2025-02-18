@@ -24,9 +24,6 @@ const bfs = () => {
       const ny = y + dy;
 
       if (nx < 0 || ny < 0 || nx >= n || ny >= m) continue;
-      if(nx===n-1&&ny===m-1){
-        return cnt+1
-      }
       if (map[nx][ny] === 0 && visited[nx][ny][bool]) {
         visited[nx][ny][bool] = 0;
         queue.push([nx, ny, cnt, bool]);
