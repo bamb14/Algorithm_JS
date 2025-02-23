@@ -25,7 +25,7 @@ const bfs=(i,j,h)=>{
   }
 }
 
-for(let h=1; h<=100; h++){
+for(let h=0; h<=100; h++){
   let count=0;
   var visited=Array.from(Array(n), ()=>Array(n).fill(1))
   for(let i=0; i<n; i++){
@@ -39,5 +39,5 @@ for(let h=1; h<=100; h++){
   max=Math.max(max, count)
 }
 
-console.log(max===0? 1: max)
-
+// console.log(max===0? 1: max)
+console.log(max)
