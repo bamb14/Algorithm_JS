@@ -9,7 +9,7 @@ let info=[]
 let parent=new Array(n+1).fill(0).map((value, idx) => idx);
 let result=[]
 
-
+// x의 루트노드 찾는 함수
 const find=(x)=>{
   if(parent[x]===x){
     return x;
@@ -28,7 +28,7 @@ const union=(x,y)=>{
   // x와 y가 같다면 이미 연결되어 있는 경우
   if(x===y) return;
   
-  if(x<y) parent[y]=x;
+  if(x>y) parent[y]=x;
   else parent[x]=y;
 }
 
