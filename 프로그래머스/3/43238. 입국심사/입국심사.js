@@ -8,9 +8,9 @@ function solution(n, times) {
 
         if (check(middle, n, times)) { // 범위를 더 줄여
             total = middle;
-            end = middle - 1;
+            end = middle - 1; // middle 왼쪽 범위
         } else {
-            start = middle + 1;
+            start = middle + 1; // middle 오른쪽 범위
         }
     }
     return total;
