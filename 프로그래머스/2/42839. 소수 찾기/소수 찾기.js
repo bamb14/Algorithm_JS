@@ -1,24 +1,29 @@
 function solution(numbers) {
     const list=numbers.split('').sort((a,b)=>a-b);
+    let visited=new Array(numbers.length).fill(1);
     let answer = new Set(); // 중복 제거용
 
     for (let i = 1; i <= list.length; i++) {
-        dfs('', list, i);
+        dfs([], i);
     }
 
-    function dfs(current, remaining, length) {
+    function dfs(current, length) {
         if (current.length === length) {
-            const num = Number(current);
+            const num = Number(current.join(''));
             if (isPrime(num)) {
                 answer.add(num);
             }
             return;
         }
 
-        for (let i = 0; i < remaining.length; i++) {
-            const newCurrent = current + remaining[i];
-            const newRemaining = remaining.slice(0, i).concat(remaining.slice(i + 1));
-            dfs(newCurrent, newRemaining, length);
+        for (let i = 0; i < list.length; i++) {
+            if(visited[i]){
+                current.push(list[i]);
+                visited[i]=0;
+                dfs(current, length);
+                visited[i]=1;
+                current.pop();
+            }
         }
     }
     
