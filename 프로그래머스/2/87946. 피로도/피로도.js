@@ -1,18 +1,24 @@
 function solution(k, dungeons) {
     let len=dungeons.length;
-
     let max=0;
+    let visited=new Array(len).fill(1);
+    let list=[];
     
-    permutation([],dungeons);
-    function permutation(current, remaining){
-        if(remaining.length===0){ // 순열 하나 완성
+    permutation([]);
+    
+    function permutation(current){
+        if(current.length===len){ // 순열 하나 완성
             max=Math.max(max,updateMax(k, current));
+            return;
         }
-        for(let i=0; i<remaining.length; i++){
-            const newCurrent=current.concat([remaining[i]]);
-            const newRemaining =remaining.slice(0,i).concat(remaining.slice(i + 1));
-            // console.log(newRemaining);
-            permutation(newCurrent,newRemaining);
+        for(let i=0; i<len; i++){
+            if(visited[i]){
+                visited[i]=0;
+                current.push(dungeons[i]);
+                permutation(current);
+                visited[i]=1;
+                current.pop();
+            }
         }
     }
     
