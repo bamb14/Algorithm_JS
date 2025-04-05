@@ -27,7 +27,7 @@ function backtracking(depth,idx){
     solution();
     return;
   }
-  for(let i=idx; i<n; i++){
+  for(let i=idx; i<=n; i++){
     if(!visited[i]){
       chicken.push(i);
       visited[i]=1;
@@ -42,7 +42,7 @@ function solution(){
   let total=0;
   let [chick1, chick2]=chicken;
   for(let i=1; i<=n; i++){
-    if(!visited[i]){
+    if(i !==chick1 && i !== chick2){
       const minChick=Math.min(distInfo[i][chick1], distInfo[i][chick2]);
       total+=minChick*2;
     }
