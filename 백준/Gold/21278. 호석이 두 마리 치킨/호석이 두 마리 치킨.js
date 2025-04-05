@@ -63,7 +63,7 @@ function bfs(i){
   
     for(const link of graph[x]){
       if(!bool[link]){
-        bool[link]=0;
+        bool[link]=1;
         dist[link]=dist[x]+1;
         queue.push(link);
       }
