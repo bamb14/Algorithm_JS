@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Solution {
-    public int[] solution(int []arr) {
+    public List<Integer> solution(int []arr) {
         List<Integer> list = new ArrayList<>();
         int curr=-1;
         for(int n : arr){
@@ -10,7 +10,7 @@ public class Solution {
                 list.add(n);
             }
         }
-        int[] answer = list.stream().mapToInt(i -> i).toArray();
-        return answer;
+        // int[] answer = list.stream().mapToInt(i -> i).toArray();
+        return list;
     }
 }
