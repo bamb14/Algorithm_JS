@@ -6,8 +6,9 @@ class Solution {
         int index=0;
         int time=0;
         int[] current=new int[]{0,0};
-        List<Integer> times=new ArrayList<>();
-        while(times.size()<jobs.length){
+        int finished=0;
+        int answer=0;
+        while(finished<jobs.length){
             while(index<jobs.length && jobs[index][0]<=time){
                 queue.offer(jobs[index++]);
             }
@@ -15,15 +16,13 @@ class Solution {
                 current=queue.poll();
 
                 time+=current[1];
-                times.add(time-current[0]);
+                finished++;
+                answer+=time-current[0];
             }else time++;
             
         }
-        int answer=0;
-        for(int i=0; i<times.size(); i++){
-            System.out.println(times.get(i));
-            answer+=times.get(i);
-        }
-        return answer/times.size();
+        
+       
+        return answer/finished;
     }
 }
