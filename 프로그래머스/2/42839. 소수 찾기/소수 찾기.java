@@ -9,7 +9,7 @@ class Solution {
             StringBuilder sb=new StringBuilder();
             bt(i,sb, cards);
         }
-        System.out.println(comb);
+        
         HashSet<Integer> set=new HashSet<>();
         for(String str : comb){
             set.add(Integer.parseInt(str));
@@ -17,7 +17,6 @@ class Solution {
         
         int answer = 0;
         for(int n:set){
-            System.out.println(n);
             if(isPrime(n)) answer++;
         }
         
