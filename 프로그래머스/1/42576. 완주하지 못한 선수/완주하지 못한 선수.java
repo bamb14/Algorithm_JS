@@ -12,7 +12,9 @@ class Solution {
             if(map.get(name)>1) map.put(name, map.get(name)-1);
             else map.remove(name);
         }
-        
+        for (String key : map.keySet()){
+            return key;
+        }
         return map.keySet().iterator().next();
     }
 }
