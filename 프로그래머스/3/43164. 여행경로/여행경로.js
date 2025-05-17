@@ -1,37 +1,32 @@
 function solution(tickets) {
     let link=new Map();
-    for(let [start, end] of tickets){
-        if(!link.has(start)) link.set(start, []);
-        link.get(start).push(end);
+    for(let [from, to] of tickets){
+        if(!link.has(from)) link.set(from,[]);
+        link.get(from).push(to);
     }
-    
     for(let list of link.values()){
-        list.sort().reverse();
+        list.sort();
     }
-    var answer = [];
-    dfs('ICN',['ICN']);
     
-    function dfs(curr, route){
+    let answer;
+    bt('ICN',['ICN']);
+    function bt(curr, route){
         if(route.length===tickets.length+1){
-            answer.push(route);
+            answer=[...route];
             return true;
         }
+        let list=link.get(curr);
+        if(!link.has(curr) || list.length===0) return false;
         
-        let end=route[route.length-1];
-
-        const destList = link.get(curr);
-        if (!destList || destList.length === 0) return false;
-        
-        for (let i = destList.length - 1; i >= 0; i--) {
-            const next = destList[i];
-            destList.splice(i, 1); // 방문 표시
+        for(let i=0; i<list.length; i++){
+            const next=list[i];
+            list.splice(i,1);
             route.push(next);
-            if (dfs(next, route)) return true; // 찾으면 바로 종료
+            if(bt(next, route)) return true;
             route.pop();
-            destList.splice(i, 0, next); // 복구
+            list.splice(i, 0, next);
         }
-        
     }
     
-    return answer[0];
+    return answer;
 }
