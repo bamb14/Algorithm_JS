@@ -14,19 +14,16 @@ if(bCnt===0){
   return;
 }
 
-let total=0;
-for (let i = 0; i < bCnt; i++) {
-  if (input[i] === 'a') total++;
-}
+input = input + input; 
 
-let minSwap=total;
+let minSwap=input.length;
 
-for(let i=1; i<input.length; i++){
-  let out=input[(i-1) % input.length]; // 윈도우 맨 앞
-  let inChar=input[(i + bCnt - 1) % input.length];
-  if(out === 'a') total--;
-  if(inChar === 'a') total++;
-  minSwap = Math.min(minSwap, total);
+for(let i=0; i<input.length-bCnt; i++){
+  let cnt=0;
+  for(let j=i; j<i+bCnt; j++){
+    if(input[j]==='a') cnt++;
+  }
+  minSwap = Math.min(minSwap, cnt);
 }
 
 console.log(minSwap);
