@@ -15,7 +15,7 @@ const dp=Array.from(Array(n), ()=>Array(21).fill(0n));
 
 dp[0][list[0]]=1n;
 
-for (let i = 1; i <=n-2; i++) {
+for (let i = 1; i < n; i++) {
   for (let j = 0; j <= 20; j++) {
     if (dp[i - 1][j]) {
       const plus = j + list[i];
