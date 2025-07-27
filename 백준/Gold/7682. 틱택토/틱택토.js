@@ -1,36 +1,33 @@
-const fs=require('fs');
-let input=fs.readFileSync(0).toString().trim().split('\n');
+const fs = require('fs');
+const input = fs.readFileSync(0).toString().trim().split('\n');
 
-let index=0;
-let answer=[];
-while(input[index]!=='end'){
-  answer.push(solution(input[index]));
-  index++;
+const answer=[];
+for(let i=0; i<input.length-1; i++){
+  const map=input[i].split('');
+  answer.push(solution(map));
 }
 console.log(answer.join('\n'));
 
 function solution(map){
+  let x_cnt=0, o_cnt=0, empty=0;
+  
   let flag='invalid';
   let Xline = false;
   let Oline = false;
-  let x=0, o=0, empty=0;
   
   for(const char of map){
-    if(char==='X') x++;
-    else if(char==='O') o++;
+    if(char==='X') x_cnt++;
+    else if(char==='O') o_cnt++;
     else empty++;
   }
+  // O이 X보다 많을 때
+  if(o_cnt>x_cnt) return 'invalid';
   
-  // 특정 하나로 몰렸을 때
-  if(Math.abs(x-o)>=2) return 'invalid';
-  
-  // O가 X보다 많을 때
-  if(o>x) return 'invalid';
-  
+  // 성공했는지
   // 가로
   for(let i=0; i<9; i+=3){
     if(map[i]!=='.' && map[i]===map[i+1] && map[i+1]===map[i+2]){
-      if (!check(map[i], x, o)) return 'invalid';
+      if (!check(map[i], x_cnt, o_cnt)) return 'invalid';
       if (map[i] === 'X') Xline = true;
       if (map[i] === 'O') Oline = true;
     }
@@ -38,19 +35,19 @@ function solution(map){
   // 세로 완성
   for(let i=0; i<3; i++){
     if(map[i]!=='.' && map[i]===map[i+3] && map[i+3]===map[i+6]){
-      if (!check(map[i], x, o)) return 'invalid';
+      if (!check(map[i], x_cnt, o_cnt)) return 'invalid';
       if (map[i] === 'X') Xline = true;
       if (map[i] === 'O') Oline = true;
     }
   }
   // 대각선 완성
   if(map[0]!=='.' && map[0]===map[4] && map[4]===map[8]){
-    if (!check(map[0], x, o)) return 'invalid';
+    if (!check(map[0], x_cnt, o_cnt)) return 'invalid';
     if (map[0] === 'X') Xline = true;
     if (map[0] === 'O') Oline = true;
   }
   if(map[2]!=='.' && map[2]===map[4] && map[4]===map[6]){
-    if (!check(map[2], x, o)) return 'invalid';
+    if (!check(map[2], x_cnt, o_cnt)) return 'invalid';
     if (map[2] === 'X') Xline = true;
     if (map[2] === 'O') Oline = true;
   }
@@ -63,8 +60,8 @@ function solution(map){
   return 'valid';
 }
 
-function check(char, x, o){
-  if (char === 'X') return x === o + 1;
-  if (char === 'O') return x === o;
+function check(char, x_cnt, o_cnt){
+  if (char === 'X') return x_cnt === o_cnt + 1;
+  if (char === 'O') return x_cnt === o_cnt;
   return false;
 }
