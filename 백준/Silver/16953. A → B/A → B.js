@@ -3,29 +3,19 @@ const input=fs.readFileSync(0).toString().trim().split('\n');
 
 let [a,b]=input[0].split(' ').map(Number);
 
-const queue=[[a,1]];
+const queue=[[b,1]];
 let answer=-1;
-// const visited=new Array(b+1).fill(false);
 
 while(queue.length>0){
   const [curr, cnt]=queue.shift();
   
-  if(curr===b) {
+  if(curr===a) {
     answer=cnt;
     break;
   }
   
-  let add=curr*10+1;
-  if(add<=b){
-    // visited[add]=true;
-    queue.push([add, cnt+1]);
-  }
-  
-  let multi=curr*2;
-  if(multi<=b){
-    // visited[multi]=true;
-    queue.push([multi, cnt+1]);
-  }
+  if((curr-1)%10===0 && (curr-1)/10 >=a) queue.push([(curr-1)/10, cnt+1]);
+  if(curr%2===0 && curr/2>=a) queue.push([curr/2, cnt+1]);
 }
 
 console.log(answer);
