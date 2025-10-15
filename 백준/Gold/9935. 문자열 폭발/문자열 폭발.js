@@ -3,25 +3,21 @@ const input=fs.readFileSync(0).toString().trim().split('\n');
 
 const str=input[0];
 const bomb=input[1];
-const len=bomb.length;
 
 const stack=[];
+stack.push();
 
-for(const ch of str){
-  stack.push(ch);
+for(let i=0; i<str.length; i++){
+  if(stack.length===0) stack.push('')
   
-  if(stack.length>=len && stack[stack.length-1]===bomb[len-1]){
-    let flag=true;
-    for(let i=0; i<len; i++){
-      if(stack[stack.length-len+i] !== bomb[i]){
-        flag=false;
-        break;
-      }
-    }
-    if(flag){
-      for(let i=0; i<len; i++) stack.pop();
-    }
+  if(str[i]===bomb[0]){
+    stack.push('');
+  }
+  stack[stack.length-1]+=str[i];
+  if(stack[stack.length-1]===bomb){
+    stack.pop();
   }
 }
 
-console.log(stack.length>0 ? stack.join(''):'FRULA');
+const answer=stack.join('');
+console.log(answer.length>0 ? answer :'FRULA');
