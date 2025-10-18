@@ -1,21 +1,29 @@
-const fs = require("fs");
-let input = fs.readFileSync(0).toString().trim().split('\n');
+const fs=require('fs');
+const input=fs.readFileSync(0).toString().trim().split('\n');
 
 let target=input[0];
-let word1=input[1];
+let start=input[1];
+
 let answer=0;
 
-dfs(word1);
-console.log(answer);
+solution(start);
 
-function dfs(word){
-  if(answer) return;
-  if(word.length<=target.length){
-    if(word===target) answer=1;
+function solution(str){
+  if(answer===1) return;
+  
+  if(str===target){
+    answer=1;
     return;
   }
   
-  if(word[word.length-1]==='A') dfs(word.slice(0, word.length-1));
-  if(word[0]==='B') dfs(word.split('').reverse().join('').slice(0, word.length-1));
-
+  if(str[str.length-1]==='A'){
+    solution(str.slice(0, str.length-1));
+  }
+  
+  if(str[0]==='B'){
+    const reverse=str.slice(1,).split('').reverse();
+    solution(reverse.join(''));
+  }
 }
+
+console.log(answer);
