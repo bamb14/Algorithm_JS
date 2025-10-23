@@ -1,23 +1,23 @@
 const fs = require("fs");
-let a = fs.readFileSync(0).toString().trim().split('\n');
+const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const card=a[1].split(' ')
-const numbers=a[3].split(' ')
+const n=Number(input[0]);
+const cards=input[1].split(' ').map(Number);
+const m=Number(input[2]);
+const list=input[3].split(' ').map(Number);
 
-const frequency = {};
+const map=new Map();
 
-for (let i = 0; i < card.length; i++) {
-  if (frequency[card[i]]) {
-    frequency[card[i]]++;
-  } else {
-    frequency[card[i]] = 1;
-  }
+for(let num of cards){
+  if(map.has(num)) map.set(num, map.get(num)+1);
+  else map.set(num, 1);
 }
 
-let results = [];
+const answer=[];
 
-for (let i = 0; i < numbers.length; i++) {
-  results.push(frequency[numbers[i]] || 0);
+for(let num of list){
+  if(map.has(num)) answer.push(map.get(num));
+  else answer.push(0);
 }
 
-console.log(results.join('\n'));
+console.log(answer.join(' '));
