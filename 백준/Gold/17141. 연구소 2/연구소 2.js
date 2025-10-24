@@ -58,14 +58,14 @@ function bfs(arr){
       if(!visited[cx][cy] && copy[cx][cy]!==1){
         visited[cx][cy]=true;
         queue.push([cx,cy,time+1]);
-        copy[x][y]=3;
+        copy[cx][cy]=3;
       }
     }
   }
   
   for(let i=0; i<n; i++){
     for(let j=0; j<n; j++){
-      if(!visited[i][j] && copy[i][j]!==1 && copy[i][j]!==3) count=Infinity;
+      if(copy[i][j]!==1 && copy[i][j]!==3) count=Infinity;
     }
   }
   
