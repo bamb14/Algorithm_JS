@@ -9,7 +9,7 @@ const answer=[];
 let index=0;
 while(1){
   const [h,w]=input[index].split(' ').map(Number);
-  if(w===0 && h===0) break;
+  if(w==0 && h==0) break;
   
   const map=input.slice(index+1,index+1+w).map(str=>str.split(' ').map(Number));
   solution(w,h,map);
@@ -23,7 +23,7 @@ function solution(w,h,map){
   
   for(let i=0; i<w; i++){
     for(let j=0; j<h; j++){
-      if(!visited[i][j] && map[i][j]===1){
+      if(!visited[i][j] && map[i][j]==1){
         count++;
         bfs(i,j, visited, w, h, map);
       }
@@ -42,7 +42,7 @@ function bfs(i,j,visited,w, h, map){
     for(let [dx,dy] of move){
       let cx=x+dx, cy=y+dy;
       if(cx<0 || cy<0 || cx>=w || cy>=h) continue;
-      if(!visited[cx][cy] && map[cx][cy]===1){
+      if(!visited[cx][cy] && map[cx][cy]==1){
         visited[cx][cy]=true;
         queue.push([cx,cy]);
       }
