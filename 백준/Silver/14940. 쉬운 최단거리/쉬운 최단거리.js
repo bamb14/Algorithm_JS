@@ -1,45 +1,37 @@
 const fs = require("fs");
-let input = fs.readFileSync(0).toString().trim().split('\n');
+const input = fs.readFileSync(0).toString().trim().split("\n");
 
-let [n, m] = input.shift().split(' ').map(Number);
-let map=input.map(str=>str.split(' ').map(Number));
-const move=[[-1,0],[1,0],[0,-1],[0,1]];
+const [n, m] = input.shift().split(" ").map(Number);
+const map=input.map(str=>str.split(' ').map(Number));
+const move=[[-1,0], [1,0], [0,1], [0,-1]];
 
-let dp = Array.from(Array(n), () => Array(m).fill(-1));
-let visited=Array.from(Array(n), ()=>Array(m).fill(false));
-let queue=[];
+const answer=Array.from(Array(n), ()=>Array(m).fill(-1));
+
+const queue=[];
 for(let i=0; i<n; i++){
   for(let j=0; j<m; j++){
-    if(map[i][j]===2){
-      dp[i][j]=0;
-      visited[i][j]=true;
+    if(map[i][j]===2) {
       queue.push([i,j,0]);
+      answer[i][j]=0;
     }
-    if (map[i][j] === 0) {
-      dp[i][j] = 0;
-      visited[i][j] = true;  // 아예 방문 처리해버림
-    }
+    if(map[i][j]===0) answer[i][j]=0;
   }
 }
 
 while(queue.length>0){
-  let [x,y,cnt]=queue.shift();
+  const [x,y,cnt]=queue.shift();
   
-  for(const [dx, dy] of move){
-    let cx=x+dx;
-    let cy=y+dy;
+  for(const [dx,dy] of move){
+    let cx=x+dx, cy=y+dy;
     if(cx<0 || cy<0 || cx>=n || cy>=m) continue;
-    
-    if(!visited[cx][cy]){
-      if(map[cx][cy]===1){
-        dp[cx][cy]=cnt+1;
-        visited[cx][cy]=true;
-        queue.push([cx,cy,dp[cx][cy]]);
+    if(answer[cx][cy]===-1){
+      if(map[cx][cy]===0) answer[cx][cy]=0;
+      else{
+        answer[cx][cy]=cnt+1;
+        queue.push([cx,cy,cnt+1]);
       }
     }
   }
 }
 
-for(let i=0; i<n; i++){
-  console.log(dp[i].join(' '));
-}
+console.log(answer.map(str=>str.join(' ')).join('\n'));
