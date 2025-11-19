@@ -1,22 +1,25 @@
 const fs = require("fs");
-let input = fs.readFileSync(0).toString().trim().split("\n");
+const input = fs.readFileSync(0).toString().trim().split("\n");
 
-const [k, n] = input.shift().split(' ').map(Number);
-const list = input.map(Number);
+const [n,m]=input.shift().split(' ').map(Number);
+const list=input.map(Number);
 
-let start=1;
-let end=Math.max(...list)
+let left=1; right=Math.max(...list);
+let answer=0;
 
-while(start<=end){
-  let mid=~~((start+end)/2)
-  let count=0;
-  // console.log('mid', mid)
-  for(const len of list){
-    count+=~~(len/mid)
-    // console.log(len, ~~(len/mid))
+while(left<=right){
+  const mid=Math.floor((left+right)/2);
+
+  let num=0;
+  for(const h of list){
+    num+=Math.floor(h/mid);
   }
-  if(count>=n) start=mid+1
-  else end=mid-1
+
+  if(num>=m){
+    answer=Math.max(answer, mid);
+    left=mid+1;
+  }
+  else right=mid-1;
 }
 
-console.log(end)
+console.log(answer);
