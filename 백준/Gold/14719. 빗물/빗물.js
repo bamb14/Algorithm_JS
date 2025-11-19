@@ -1,28 +1,37 @@
 const fs = require("fs");
-let input = fs.readFileSync(0).toString().trim().split('\n');
+const input = fs.readFileSync(0).toString().trim().split('\n');
 
-let [h,w]=input[0].split(' ').map(Number);
-let blocks=input[1].split(' ').map(Number);
+const [h,w]=input[0].split(' ').map(Number);
+const list=input[1].split(' ').map(Number);
 
-let left=[0];
-let right=[0];
-let l=0;r=0;
-for(let i=1; i<w; i++){
-  l=Math.max(l, blocks[i-1]);
-  left.push(l);
-}
-for(let i=w-2; i>-1; i--){
-  r=Math.max(r, blocks[i+1])
-  right.push(r);
-}
-right.reverse();
-
+let maxHeight=Math.max(...list);
+let max=list[0];
+let prev=0;
 let answer=0;
-for(let i=1; i<w; i++){
-  if(left[i]>blocks[i] && right[i]>blocks[i]){
-    let min=Math.min(left[i], right[i]);
-    answer+=(min-blocks[i]);
+
+for(let i=0; i<list.length; i++){
+  if(max<=list[i]){
+    for(let j=prev; j<i; j++){
+      answer+=max-list[j];
+    }
+    prev=i;
+    max=list[i];
+  }
+  
+  if(max===maxHeight){
+    max=list[w-1]
+    prev=w-1;
+    
+    for(let j=w-1; j>=i; j--){
+      if(max<=list[j]){
+        for(let k=prev; k>j; k--){
+          answer+=max-list[k];
+        }
+        prev=j;
+        max=list[j];
+      }
+    }
+    break;
   }
 }
-
 console.log(answer);
