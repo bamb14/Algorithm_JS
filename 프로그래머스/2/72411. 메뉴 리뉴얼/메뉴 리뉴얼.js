@@ -4,9 +4,7 @@ function solution(orders, course) {
         const result=[];
         for(const order of orders){
             if(order.length>=len){
-                const visited=new Array(order.length).fill(false);
-                let max=0;
-                bt([], 0, len, order, result, visited);
+                bt([], 0, len, order, result);
             }
         }
         const map=new Map();
@@ -27,18 +25,14 @@ function solution(orders, course) {
     return answer.sort();
 }
 
-function bt(arr, idx, len, order, result, visited){
+function bt(arr, idx, len, order, result){
     if(arr.length>=len){
         result.push([...arr].sort().join(''));
         return;
     }
     for(let i=idx; i<order.length; i++){
-        if(!visited[i]){
-            arr.push(order[i]);
-            visited[i]=true;
-            bt(arr, i+1, len, order, result, visited);
-            visited[i]=false;
-            arr.pop();
-        }
+        arr.push(order[i]);
+        bt(arr, i+1, len, order, result);
+        arr.pop();
     }
 }
