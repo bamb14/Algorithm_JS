@@ -3,17 +3,29 @@ const input=fs.readFileSync(0).toString().trim().split('\n');
 
 const n=Number(input.shift());
 const list=input.map(Number);
+const queue=[list[0]];
 
-// i번재 인덱스까지 LIS 길이
-const dp=Array(n).fill(1);
-
-for(let i=0; i<n; i++){
-  for(let j=0; j<i; j++){
-    if(list[i]>list[j] && dp[j]+1>dp[i]){
-      dp[i]=dp[j]+1;
-    }
+for(let i=1; i<n; i++){
+  if(queue[queue.length-1] < list[i]){
+    queue.push(list[i]);
   }
-}
 
-const max=Math.max(...dp);
-console.log(n-max);
+  let position=binarySearch(list[i]);
+  queue[position]=list[i];
+  
+}
+console.log(n-queue.length);
+
+function binarySearch(target){
+  let left=0, right=queue.length;
+  
+  while(left<right){
+    const mid=Math.floor((left+right)/2);
+    
+    if(queue[mid]===target) return mid;
+    
+    if(queue[mid]<target) left=mid+1;
+    else right=mid;
+  }
+  return left;
+}
