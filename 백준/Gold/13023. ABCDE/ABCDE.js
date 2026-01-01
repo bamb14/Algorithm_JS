@@ -12,27 +12,31 @@ for(let i=0; i<m; i++){
 }
 
 let flag=false;
+const visited=new Array(n).fill(false);
+
 for(let i=0; i<n; i++){
   if(flag) break;
-  const set=new Set();
-  set.add(i);
+  visited[i]=true;
+  dfs(i, 1);
+  visited[i]=false;
+}
+
+console.log(flag? 1: 0);
+
+function dfs(curr, depth){
+  if(flag) return;
   
-  const queue=[[i,1, set]];
-  let index=0;
-  while(queue.length>index){
-    const [curr, cnt, visited]=queue[index++];
-    for(const f of link[curr]){
-      if(!visited.has(f)){
-        if(cnt==4){
-          flag=true;
-          break;
-        }
-        const newVisited=new Set(visited);
-        newVisited.add(f);
-        queue.push([f, cnt+1, newVisited]);
-        
-      }
+  if(depth==5){
+    flag=true;
+    return;
+  }
+  
+  for(const f of link[curr]){
+    if(!visited[f]){
+      visited[f]=true;
+      dfs(f, depth+1);
+      visited[f]=false;
+      if(flag) return;
     }
   }
 }
-console.log(flag? 1: 0);
