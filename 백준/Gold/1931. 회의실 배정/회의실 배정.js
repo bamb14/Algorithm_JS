@@ -12,15 +12,11 @@ let count=1;
 let endTime=list[0][1];
 
 for(let i=1; i<n; i++){
-  // for(let idx=i; idx<n; idx++){
     const [start, end]=list[i];
     if(start>=endTime){
       count++;
-      // i=idx;
       endTime=end;
-      // break;
     }
-  // }
 }
 
 console.log(count);
