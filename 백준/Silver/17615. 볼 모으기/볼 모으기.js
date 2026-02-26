@@ -1,42 +1,41 @@
-const fs = require('fs');
+const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
-const n = Number(input[0]);
-const balls = input[1].split('');
+const n = Number(input.shift());
+const list=input[0].split('');
 
-// 왼쪽으로 빨간색 볼을 모을 때 필요한 이동 횟수 계산
-function countRedMoves(balls) {
-  let count = 0;
-  let redCount = 0;
+let redTotal=0, blueTotal=0;
 
-  // 왼쪽에서 오른쪽으로 순회하면서 빨간색 볼을 세고, 파란색 볼을 넘어설 때 이동 횟수 증가
-  for (let i = 0; i < balls.length; i++) {
-    if (balls[i] === 'R') {
-      redCount++;
-    } else {
-      count = Math.min(count + 1, redCount); // 빨간색 볼을 넘어설 때마다 이동 횟수 증가
-    }
-  }
-  return count;
+for(let b of list){
+  if(b=='R') redTotal++;
+  else if(b=='B') blueTotal++;
 }
 
-// 오른쪽으로 빨간색 볼을 모을 때 필요한 이동 횟수 계산
-function countBlueMoves(balls) {
-  let count = 0;
-  let blueCount = 0;
-
-  // 왼쪽에서 오른쪽으로 순회하면서 파란색 볼을 세고, 빨간색 볼을 넘어설 때 이동 횟수 증가
-  for (let i = 0; i < balls.length; i++) {
-    if (balls[i] === 'B') {
-      blueCount++;
-    } else {
-      count = Math.min(count + 1, blueCount); // 파란색 볼을 넘어설 때마다 이동 횟수 증가
-    }
-  }
-  return count;
+let leftRed=0;
+for(let b of list){
+  if(b=='R') leftRed++;
+  else break;
 }
 
-// 빨간색 볼을 왼쪽으로 모을 때의 최소 이동 횟수와 파란색 볼을 오른쪽으로 모을 때의 이동횟수를 구한다.
-const minMoves = Math.min(countRedMoves(balls), countBlueMoves(balls));
+let rightRed=0;
+for(let i=n-1; i>=0; i--){
+  if(list[i]=='R') rightRed++;
+  else break;
+}
 
-console.log(minMoves);
+let leftBlue=0;
+for(let b of list){
+  if(b=='B') leftBlue++;
+  else break;
+}
+
+let rightBlue=0;
+for(let i=n-1; i>=0; i--){
+  if(list[i]=='B') rightBlue++;
+  else break;
+}
+
+const redMin=redTotal-Math.max(leftRed, rightRed);
+const blueMin=blueTotal-Math.max(leftBlue, rightBlue);
+
+console.log(Math.min(redMin, blueMin));
