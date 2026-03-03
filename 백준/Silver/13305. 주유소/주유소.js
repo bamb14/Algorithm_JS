@@ -2,30 +2,17 @@ const fs = require("fs");
 const input = fs.readFileSync(0).toString().trim().split('\n');
 
 const n = Number(input[0]);
-const dist=input[1].split(' ').map(Number);
-const list=input[2].split(' ').map(Number);
+const dist=input[1].split(' ').map(v => BigInt(v));
+const list=input[2].split(' ').map(v => BigInt(v));
 
-let index=0;
-for(let i=1; i<n-1; i++){
-  if(list[index]>list[i]) index=i;
-}
+let min=list[0];
+let answer=0n;
 
-if(index==0){
-  const total=dist.reduce((a,b)=>a+b,0);
-  console.log(total*list[index]);
-}
-else{
-  let prev=0;
-  let min=0, sum=dist[0];
-  for(let i=1; i<=index; i++){
-    if(list[min]>list[i]){
-      prev+=sum*list[min];
-      sum=dist[i];
-      min=i;
-    }
-    else sum+=dist[i];
+for(let i=0; i<n-1; i++){
+  if(list[i]<min){
+    min=list[i];
   }
-
-  const next=dist.slice(index).reduce((a,b)=>a+b,0);
-  console.log(prev+next*list[index])
+  answer+= min*dist[i];
 }
+
+console.log(answer.toString());
