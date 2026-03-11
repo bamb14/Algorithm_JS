@@ -4,24 +4,24 @@ let input=fs.readFileSync(0).toString().trim().split('\n');
 let N=Number(input.shift());
 input=input.map(str=>str.split(' '));
 
-const tree = {};
+const tree = new Map();
 
 function insertPath(path) {
   let n=path.shift();
   let node = tree;
   for (const part of path) {
-    if (!node[part]) {
-      node[part] = {};
+    if (!node.has(part)) {
+      node.set(part, new Map());
     }
-    node = node[part];
+    node = node.get(part);
   }
 }
 
 function printTree(node, depth = 0) {
-  const keys = Object.keys(node).sort();
+  const keys = Array.from(node.keys()).sort();
   for (const key of keys) {
     console.log("--".repeat(depth) + key);
-    printTree(node[key], depth + 1);
+    printTree(node.get(key), depth + 1);
   }
 }
 
