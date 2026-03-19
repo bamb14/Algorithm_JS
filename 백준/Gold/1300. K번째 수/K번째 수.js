@@ -4,7 +4,7 @@ const input = fs.readFileSync(0).toString().trim().split('\n');
 const n=Number(input[0]);
 const k=Number(input[1]);
 
-let left=1, right=k;
+let left=1, right=n**2;
 
 while(left<=right){
   let mid=Math.floor((left+right)/2);
