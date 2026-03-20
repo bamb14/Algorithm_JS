@@ -31,7 +31,7 @@ const dp=Array(n);
 // 0 ~ i까지 문자열을 팰린드롬으로 나눌 때 최소 개수
 
 for (let i = 0; i < n; i++) {
-  dp[i] = Infinity;
+  dp[i] = i+1;
 
   for (let j = 0; j <= i; j++) {
     if (isPalindrome[j][i]) {
