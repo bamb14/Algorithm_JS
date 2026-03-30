@@ -9,11 +9,11 @@ const move=[
 ]
 
 for(let i=0; i<t; i++){
-  const L=Number(input[3*i]);
+  const L=input[3*i];
   const [startX, startY]=input[3*i+1].split(' ').map(Number);
   const [endX, endY]=input[3*i+2].split(' ').map(Number);
   
-  const visited = Array.from(Array(L), ()=>Array(L).fill(false));
+  const visited = Array.from(Array(300), ()=>Array(300).fill(false));
   
   const queue=[[startX, startY, 0]];
   
