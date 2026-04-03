@@ -6,7 +6,7 @@ const n=str.length;
 let min=(n==2 && str[0]==str[1])? 2 :(n-1)*2+1;
 
 
-for(let i=n-1; i>=0; i--){
+for(let i=n-1; i>=Math.floor(n/2); i--){
   let left=i, right=i;
   
   while(left>=0 && right<n){
