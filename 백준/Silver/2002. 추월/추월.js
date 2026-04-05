@@ -11,13 +11,11 @@ let answer=0;
 for(let i=0; i<n; i++){
   while(curr < n && visited.has(before[curr])) curr++;
   
-  if(before[curr]==after[i]) curr++;
-  else{
-    if(before[curr]==after[i]) curr++;
-    else{
-      visited.add(after[i]);
-      answer++;
-    }
+  if(before[curr] == after[i]){
+    curr++;
+  } else {
+    visited.add(after[i]);
+    answer++;
   }
 }
 
