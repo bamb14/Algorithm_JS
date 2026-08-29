@@ -1,50 +1,51 @@
 import java.util.*;
 class Solution {
-    List<String> comb =new ArrayList<>();
-    boolean[] visited= new boolean[8];
+    List<int[]> list = new ArrayList<>();
+    boolean[] visited;
+    
     public int solution(String numbers) {
-        String[] cards=numbers.split("");
+        visited = new boolean[numbers.length()];
+        Set<Integer> set = new HashSet<>();
+        Stack<Integer> stack = new Stack<>();
         
-        for(int i=1; i<=cards.length; i++){
-            StringBuilder sb=new StringBuilder();
-            bt(i,sb, cards);
+        for(int i=1; i<=numbers.length(); i++) bt(stack, i);
+        
+        for(int [] arr : list){
+            String str="";
+            for(int idx : arr) str+=numbers.charAt(idx);
+            
+            set.add(Integer.valueOf(str));
         }
-        
-        HashSet<Integer> set=new HashSet<>();
-        for(String str : comb){
-            set.add(Integer.parseInt(str));
-        }
-        
-        int answer = 0;
-        for(int n:set){
+
+        int answer=0;
+        for(int n : set){
             if(isPrime(n)) answer++;
         }
         
         return answer;
     }
     
-    public void bt(int len, StringBuilder sb, String[] cards){
-        if(sb.length()==len){
-            comb.add(sb.toString());
+    public void bt(Stack<Integer> stack, int len){
+        if(stack.size()>=len){
+            list.add(stack.stream().mapToInt(v->v).toArray());
             return;
         }
-        for(int i=0; i<cards.length; i++){
+        for(int i=0; i<visited.length; i++){
             if(visited[i]==false){
-                sb.append(cards[i]);
                 visited[i]=true;
-                
-                bt(len,sb,cards);
-                
+                stack.push(i);
+                bt(stack, len);
                 visited[i]=false;
-                sb.deleteCharAt(sb.length() - 1);
+                stack.pop();
             }
         }
     }
     
-    public static boolean isPrime(int n){
-        if(n<=1) return false;
+    public boolean isPrime(int n){
+        if(n==0 || n==1) return false;
+        
         for(int i=2; i<=Math.sqrt(n); i++){
-            if(n%i==0) return false;
+            if(n%i == 0) return false;
         }
         return true;
     }
