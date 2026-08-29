@@ -3,19 +3,19 @@ class Solution {
     public int solution(int[][] maps) {
         int n = maps.length;
         int m = maps[0].length;
-        int min=Integer.MAX_VALUE;
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0,0,0});
+        
         boolean[][] visited= new boolean[n][m];
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{0,0,1});
+        visited[0][0]=true;
+        
         int[][] moves =  {{-1,0},{0,-1},{1,0},{0,1}};
         
         while(!queue.isEmpty()){
             int[] arr = queue.poll();
-            arr[2]++;
             
             if(arr[0]==n-1 && arr[1]==m-1){
-                min=Math.min(min, arr[2]);
-                continue;
+                return arr[2];
             }
             
             for(int[] move : moves){
@@ -27,12 +27,11 @@ class Solution {
                 
                 if(visited[dx][dy]==false){
                     visited[dx][dy]=true;
-                    queue.offer(new int[]{dx,dy,arr[2]});
+                    queue.offer(new int[]{dx,dy,arr[2]+1});
                 }
             }
         }
         
-        if(min==Integer.MAX_VALUE) return -1;
-        return min;
+        return -1;
     }
 }
