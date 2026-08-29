@@ -1,56 +1,45 @@
 import java.util.*;
 class Solution {
-    HashMap<String, List<String>> map=new HashMap<>();
-    HashSet<String> visited=new HashSet<>();
     public int solution(String begin, String target, String[] words) {
-        for(int i=0; i<words.length; i++){
-            visited.add(words[i]);
-            for(int j=i+1; j<words.length; j++){
-                if(isConnect(words[i],words[j])){
-                    map.computeIfAbsent(words[i], value->new ArrayList<>()).add(words[j]);
-                    map.computeIfAbsent(words[j], value->new ArrayList<>()).add(words[i]);
+        List<String> list = new ArrayList<>(Arrays.asList(words));
+        if(!list.contains(target)) return 0;
+        list.add(begin);
+        
+        // 인접리스트
+        Map<String, List<String>> map = new HashMap<>();
+        
+        for(String w1 : list){
+            List<String> neighbor = new ArrayList<>();
+            for(String w2 : list){
+                if(w1.equals(w2)) continue;
+                int cnt=0;
+                for(int i=0; i<w1.length(); i++){
+                    if(w1.charAt(i) != w2.charAt(i)) cnt++;
                 }
+                if(cnt==1) neighbor.add(w2);
+            
             }
-            // 🔥 begin과 연결되는 것도 map에 추가
-            if (isConnect(begin, words[i])) {
-                map.computeIfAbsent(begin, value -> new ArrayList<>()).add(words[i]);
-                map.computeIfAbsent(words[i], value -> new ArrayList<>()).add(begin);
-            }
+            map.put(w1, neighbor);
         }
         
-        return bfs(begin, target);
-    }
-    public boolean isConnect(String word1, String word2){
-        int cnt=0;
-        for(int i=0; i<word1.length(); i++){
-            if(word1.charAt(i)!=word2.charAt(i)) cnt++;
-            if(cnt>1) return false;
-        }
-        return true;
-    }
-    class Pair {
-        String key;
-        Integer value;
-    
-        Pair(String key, Integer value) {
-            this.key = key;
-            this.value = value;
-        }
-    }
-    public int bfs(String begin, String target){
-        Queue<Pair> queue=new LinkedList<>();
-        queue.offer(new Pair(begin, 0));
-
+        Queue<String> queue = new LinkedList<>();
+        queue.offer(begin);
+        
+        Set<String> visited = new HashSet<>();
+        visited.add(begin);
+        int answer=0;
         while(!queue.isEmpty()){
-            Pair curr=queue.poll();
-            if(curr.key.equals(target)) return curr.value;
-            List<String> list=map.get(curr.key);
-            if(list==null) continue;
-            for(String word:list){
-                if(visited.contains(word)){
-                    visited.remove(word);
-                    queue.offer(new Pair(word, curr.value+1));
-                }
+            String curr = queue.poll();
+            
+            List<String> neighbor = map.get(curr);
+            answer++;
+            // System.out.println(curr+ " "+answer);
+            for(String word : neighbor){
+                if(visited.contains(word)) continue;
+                
+                if(word.equals(target)) return answer;
+                queue.offer(word);
+                visited.add(word);
             }
         }
         return 0;

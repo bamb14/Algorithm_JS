@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 79.4 MB, 시간: 1.85 ms
+메모리: 74.2 MB, 시간: 1.82 ms
 
 ### 구분
 
@@ -16,12 +16,12 @@
 
 ### 제출 일자
 
-2025년 04월 26일 15:18:08
+2026년 08월 29일 23:36:08
 
 ### 문제 설명
 
 <p>두 개의 단어 begin, target과 단어의 집합 words가 있습니다. 아래와 같은 규칙을 이용하여 begin에서 target으로 변환하는 가장 짧은 변환 과정을 찾으려고 합니다.</p>
-<div class="highlight"><pre class="codehilite"><code>1. 한 번에 한 개의 알파벳만 바꿀 수 있습니다.
+<div class="highlight" bis_skin_checked="1"><pre class="codehilite"><code>1. 한 번에 한 개의 알파벳만 바꿀 수 있습니다.
 2. words에 있는 단어로만 변환할 수 있습니다.
 </code></pre></div>
 <p>예를 들어 begin이 "hit", target가 "cog", words가 ["hot","dot","dog","lot","log","cog"]라면 "hit" -&gt; "hot" -&gt; "dot" -&gt; "dog" -&gt; "cog"와 같이 4단계를 거쳐 변환할 수 있습니다.</p>
