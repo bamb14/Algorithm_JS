@@ -1,23 +1,27 @@
 import java.util.*;
 class Solution {
-    public int solution(int[] priorities, int location) {
-        Queue<Integer> queue=new LinkedList<>();
-        PriorityQueue<Integer> priority=new PriorityQueue<>((a,b)->b-a);
-        for(int i=0; i<priorities.length; i++){
-            queue.offer(i);
-            priority.offer(priorities[i]);
-        }
-        int answer=0;
-        while(!queue.isEmpty()){
-            int curr=queue.poll();
-            if(priorities[curr]<priority.peek()) queue.offer(curr);
-            else{
-                priority.poll();
-                answer++;
-                if(curr==location) return answer;
-            }
+    public int solution(int[] priorities, int location) {        
+        Queue<List<Integer>> queue = new LinkedList<>();
+        
+        PriorityQueue<Integer> heap = new PriorityQueue<>(Collections.reverseOrder());
+        
+        for(int i=0; i<priorities.length; i++) {
+            Integer n = Integer.valueOf(priorities[i]);
+            queue.offer(Arrays.asList(n, i));
+            heap.offer(n);
         }
         
-        return -1;
+        int cnt=0;
+        while(!queue.isEmpty()){
+            List<Integer> top = queue.poll();
+            if(top.get(0) == heap.peek()){
+                cnt++;
+                heap.poll();
+                if(top.get(1) == location) break;
+            }
+            else queue.offer(top);
+        }
+        
+        return cnt;
     }
 }
