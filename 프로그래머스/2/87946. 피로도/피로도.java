@@ -1,39 +1,44 @@
 import java.util.*;
 class Solution {
-    List<int[]> allCase=new ArrayList<>();
-    boolean[] visited=new boolean[8];
+    List<int[]> cases = new ArrayList<>();
+    boolean[] visited = new boolean[8];
+    
     public int solution(int k, int[][] dungeons) {
-        List<Integer> list=new ArrayList<>();
-        bt(list, dungeons.length);
+        int answer = 0;
+        Stack<Integer> stack = new Stack<>();
+        bt(stack, dungeons.length);
         
-        int answer = -1;
-        
-        for(int[] order : allCase){
-            int remain=k;
-            int cnt=0;
-            for(int i=0; i<order.length; i++){
-                int index=order[i];
-                if(remain>=dungeons[index][0]){
-                    remain-=dungeons[index][1];
+        for(int[] order : cases){
+            int remain = k;
+            int cnt = 0;
+            for(int idx : order){
+                if(remain >= dungeons[idx][0]){
                     cnt++;
-                }else break;
+                    remain -= dungeons[idx][1];
+                }
+                else break;
             }
-            if(answer<cnt) answer=cnt;
+            answer=Math.max(answer, cnt);
         }
         
         return answer;
     }
-    public void bt(List<Integer> list, int len){
-        if(list.size()==len){
-            allCase.add(list.stream().mapToInt(i->i).toArray());
+    public void bt(Stack<Integer> stack, int len){
+        if(stack.size()>=len){
+            // cases.add(list.stream().mapToInt(v->v).toArray());
+            int[] arr = new int[stack.size()];
+            for(int i=0; i<stack.size(); i++){
+                arr[i]=stack.get(i);
+            }
+            cases.add(arr);
             return;
         }
         for(int i=0; i<len; i++){
-            if(visited[i]==false){
+            if(visited[i] == false){
                 visited[i]=true;
-                list.add(i);
-                bt(list, len);
-                list.remove(list.size()-1);
+                stack.push(i);
+                bt(stack, len);
+                stack.pop();
                 visited[i]=false;
             }
         }
