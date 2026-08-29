@@ -1,21 +1,14 @@
 import java.util.*;
 class Solution {
-    List<int[]> list = new ArrayList<>();
+    Set<Integer> set = new HashSet<>();
     boolean[] visited;
     
     public int solution(String numbers) {
         visited = new boolean[numbers.length()];
-        Set<Integer> set = new HashSet<>();
+        
         Stack<Integer> stack = new Stack<>();
         
-        for(int i=1; i<=numbers.length(); i++) bt(stack, i);
-        
-        for(int [] arr : list){
-            String str="";
-            for(int idx : arr) str+=numbers.charAt(idx);
-            
-            set.add(Integer.valueOf(str));
-        }
+        for(int i=1; i<=numbers.length(); i++) bt(stack, i, numbers);
 
         int answer=0;
         for(int n : set){
@@ -25,16 +18,20 @@ class Solution {
         return answer;
     }
     
-    public void bt(Stack<Integer> stack, int len){
+    public void bt(Stack<Integer> stack, int len, String numbers){
         if(stack.size()>=len){
-            list.add(stack.stream().mapToInt(v->v).toArray());
+            String str="";
+            for(int idx : stack){
+                str+=numbers.charAt(idx);
+            }
+            set.add(Integer.valueOf(str));
             return;
         }
         for(int i=0; i<visited.length; i++){
             if(visited[i]==false){
                 visited[i]=true;
                 stack.push(i);
-                bt(stack, len);
+                bt(stack, len, numbers);
                 visited[i]=false;
                 stack.pop();
             }
