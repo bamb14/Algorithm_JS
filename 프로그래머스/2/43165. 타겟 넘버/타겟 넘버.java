@@ -1,18 +1,25 @@
+import java.util.*;
+
 class Solution {
-    int cnt=0;
+    List<Integer> list = new ArrayList<>();
     public int solution(int[] numbers, int target) {
-        dfs(0, 0, numbers, target);
-        return cnt;
+        
+        dfs(0, 0, numbers);
+        
+        int answer=0;
+        for(int n : list){
+            if(n==target) answer++;
+        }
+        return answer;
     }
-    public void dfs(int num, int index, int[] numbers, int target){
-        if(index>=numbers.length){
-            if(num==target){
-                cnt++;
-            }
+    
+     public void dfs(int num, int idx, int[] numbers){
+        if(idx>=numbers.length){
+            list.add(num);
             return;
         }
-        
-        dfs(num+numbers[index], index+1, numbers, target);
-        dfs(num-numbers[index], index+1, numbers, target);
+
+        dfs(num+numbers[idx], idx+1, numbers);
+        dfs(num-numbers[idx], idx+1, numbers);
     }
 }
