@@ -1,5 +1,15 @@
 import java.util.*;
 class Solution {
+    class Pair{
+        String word;
+        int n;
+
+        Pair(String word, int n){
+            this.word = word;
+            this.n = n;
+        }
+    }
+    
     public int solution(String begin, String target, String[] words) {
         List<String> list = new ArrayList<>(Arrays.asList(words));
         if(!list.contains(target)) return 0;
@@ -22,24 +32,24 @@ class Solution {
             map.put(w1, neighbor);
         }
         
-        Queue<String> queue = new LinkedList<>();
-        queue.offer(begin);
+        // BFS
+        Queue<Pair> queue = new LinkedList<>();
+        queue.offer(new Pair(begin, 0));
         
         Set<String> visited = new HashSet<>();
         visited.add(begin);
-        int answer=0;
+        
         while(!queue.isEmpty()){
-            String curr = queue.poll();
+            Pair pair = queue.poll();
+            String curr = pair.word;
             
-            List<String> neighbor = map.get(curr);
-            answer++;
-            // System.out.println(curr+ " "+answer);
-            for(String word : neighbor){
-                if(visited.contains(word)) continue;
+            for(String next : map.get(curr)){
+                if(visited.contains(next)) continue;
                 
-                if(word.equals(target)) return answer;
-                queue.offer(word);
-                visited.add(word);
+                if(next.equals(target)) return pair.n+1;
+                
+                queue.offer(new Pair(next, pair.n+1));
+                visited.add(next);
             }
         }
         return 0;
